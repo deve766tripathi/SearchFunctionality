@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package questions;
+
+service QuestionService {
+  rpc GetQuestions (PaginationRequest) returns (QuestionsResponse) {}
+}
+
+message PaginationRequest {
+  int32 page = 1;
+  int32 pageSize = 2;
+  string sortField = 3;
+  SortDirection sortDirection = 4;
+}
+
+enum SortDirection {
+  ASCENDING = 0;
+  DESCENDING = 1;
+}
+
+message QuestionsResponse {
+  repeated Question questions = 1;
+  int32 total = 2;
+}
+
+message Question {
+  string type = 1;
+  string title = 2;
+  repeated Option options = 3;
+  repeated Block blocks = 4;
+  string solution = 5;
+}
+
+message Option {
+  string text = 1;
+  bool isCorrectAnswer = 2;
+}
+
+message Block {
+  string text = 1;
+  bool showInOption = 2;
+  bool isAnswer = 3;
+}
